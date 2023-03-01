@@ -12,7 +12,7 @@ def initialize_db():
     
     ''')
 
-    #CREATE TABLE IF NOT EXISTS transactions(id integer primary key autoincrement,station,port,interface,floor,info2,user,timestamp,transtype)
+    #CREATE TABLE IF NOT EXISTS transactions(id integer primary key autoincrement,station,port,interface,floor,user,timestamp,transtype)
     #CREATE TABLE IF NOT EXISTS mapping(id integer primary key autoincrement, service text, handle text, password text)
 
 def close_db():
@@ -28,6 +28,7 @@ def create_pass(service, handle, password):
         return 0
     except:
         return 1
+
 
 
 

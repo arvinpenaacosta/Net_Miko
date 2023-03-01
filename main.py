@@ -475,6 +475,7 @@ def main(page: ft.Page):
             )
     )
 
+
 ft.app(target=main, port=8886, assets_dir="assets")
 
 # https://www.youtube.com/watch?v=Apxe4kAPIpQ&t=2s

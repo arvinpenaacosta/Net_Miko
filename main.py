@@ -1,6 +1,7 @@
 import flet as ft
 from db import *
 from modals import *
+from datetime import *
 
 def main(page: ft.Page):
 
@@ -85,15 +86,15 @@ def main(page: ft.Page):
 
 
     #  on_long_press -MODAL   
-    def showdata(e,id):
+    def showdata(e):
         # THEN PRINT YOU SELECT TO TERMINAL
-        print(f"Selected Row... {e.control.data.value}")  
+        
         str_idx = e.control.data.value
         #print(str_idx)  
 
         my_idx = str_idx.split(" | ")
 
-        print(my_idx[0])
+        print(f"\nRow ID :{my_idx[0]}")
 
         my_id = int(my_idx[0])
         station = (my_idx[1])
@@ -103,6 +104,8 @@ def main(page: ft.Page):
         info1 = (my_idx[5])
         info2 = (my_idx[6])
 
+        print(f"\nshowdata e default valuez  ... {e.control.data.value}")  
+          
 
         change_station_field = ft.TextField(value = station, label="Station", width=200, height=40)
         change_port_field = ft.TextField(value = port, label="Port", width=200, height=40)
@@ -125,7 +128,10 @@ def main(page: ft.Page):
             page.update()
 
         def edit_entry(*e):
-           
+            
+            #print( f"<UPDATE2>: old.({interface})")
+            print( f"<UPDATE2>: new.({change_interface_field.value})")
+
             station = change_station_field.value
             port = change_port_field.value
             interface = change_interface_field.value
@@ -134,7 +140,12 @@ def main(page: ft.Page):
             info2 = change_info2_field.value
             
 
-            print(f"\nMODAL DATA165: {my_id}, {station}, {port}, {interface}, {floor}, {info1}, {info2}\n")
+            #if change_interface_field.value != interface:
+            #print( f"<UPDATE2>: n.({change_interface_field.value}) - o.({interface})")
+
+
+
+            print(f"\nMODAL update_data: {my_id}, {station}, {port}, {interface}, {floor}, {info1}, {info2}\n")
             update_data(my_id, station, port, interface, floor, info1, info2)
             
             results = get_by_handle(search_box.value)
@@ -142,7 +153,29 @@ def main(page: ft.Page):
 
             page.update()
             page.snack_bar.open = True
+
+
+            
+            
+            tnow = datetime.now()
+
+            print(f"Start")
+            #ustation = "p-006"
+            #uport = "182x"
+            #uinterface = "g1/0/22"
+            #ufloor = "3F"
+            user = "arvin"   
+            timedone = tnow.strftime("%Y-%m-%d %H:%M:%S")
+            transtype = "update"
+            print(f"End")
+
+            print(f"\n<MODIFY>: {station}, {port}, {interface}, {floor}, {user}, {timedone}, {transtype}\n")
+            
+            log_transaction(station, port, interface, floor, user, timedone, transtype)
             close_dlg()
+
+
+
 
         def delete_entry(e):
             delete_pass(my_id)
@@ -289,7 +322,7 @@ def main(page: ft.Page):
                                 #data=ft.Text(f"{entry[0]} | {entry[1]} | {entry[2]} | {entry[3]} | {entry[4]} | {entry[5]} | {entry[6]}"),
                                 data=ft.Text(f"{entry[0]} | {entry[1]} | {entry[2]} | {entry[3]} | {entry[4]} | {entry[5]} | {entry[6]} "),
                                 on_click=lambda e: handle_account_click(e, entry[3]),
-                                on_long_press=lambda e:showdata(e, data)
+                                on_long_press=lambda e:showdata(e)
                         )),
                         
                     ]

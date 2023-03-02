@@ -12,8 +12,8 @@ def initialize_db():
     
     ''')
 
-    #CREATE TABLE IF NOT EXISTS transactions(id integer primary key autoincrement,station,port,interface,floor,user,timestamp,transtype)
-    #CREATE TABLE IF NOT EXISTS mapping(id integer primary key autoincrement, service text, handle text, password text)
+    #CREATE TABLE IF NOT EXISTS transactions(id integer primary key autoincrement,station,port,interface,floor,user,timedone,transtype)
+    
 
 def close_db():
     conn.close()
@@ -30,13 +30,23 @@ def create_pass(service, handle, password):
         return 1
 
 
+def log_transaction(station, port, interface, floor, user, timedone, transtype):
+    try: 
+        cur.execute('''
+            INSERT INTO transactions(station, port, interface, floor, user, timedone, transtype)
+            VALUES(?, ?, ?, ?, ?, ?, ?)
+            ''', (station, port, interface, floor, user, timedone, transtype))
+        conn.commit()
+        return 0
+    except:
+        return 1
 
 
 
 
 #def update_data(my_id, station, port, interface,floor, info1, info2):
 def update_data(my_id, station, port, interface, floor, info1, info2):
-    print(f"\n<UPDATE>:  {my_id}, {station}, {port}, {interface}, {floor}, {info1}\n")
+    print(f"\n<UPDATE>:  {my_id}, {station}, {port}, {interface}, {floor}, {info1}, {info2}\n")
     try:
         cur.execute("""
         UPDATE mapping SET station = ? , port = ?, interface = ?, floor = ?, info1 = ?, info2 = ?

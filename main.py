@@ -104,7 +104,8 @@ def main(page: ft.Page):
         info1 = (my_idx[5])
         info2 = (my_idx[6])
 
-        print(f"\nshowdata e default valuez  ... {e.control.data.value}")  
+        print(f"\nshowdata e default valuez1  ... {str_idx}")  
+        print(f"\nshowdata e default valuez2  ... {e.control.data.value}")  
           
 
         change_station_field = ft.TextField(value = station, label="Station", width=200, height=40)
@@ -128,9 +129,11 @@ def main(page: ft.Page):
             page.update()
 
         def edit_entry(*e):
+
+            print(f"\nxRow ID :{my_id}")
+            print( f"<UPDATE2>: old.({str_idx})")
+            #print( f"<UPDATE2>: new.({change_interface_field.value})")
             
-            #print( f"<UPDATE2>: old.({interface})")
-            print( f"<UPDATE2>: new.({change_interface_field.value})")
 
             station = change_station_field.value
             port = change_port_field.value
@@ -138,7 +141,12 @@ def main(page: ft.Page):
             floor = change_floor_field.value
             info1 = change_info1_field.value
             info2 = change_info2_field.value
-            
+
+            #print( f"<UPDATE2>: new.({interface})")
+            newdata=f"{my_id} | {station} | {port} | {interface} | {floor} | {info1} | {info2.strip()}"
+            print( f"<UPDATE2>: new.({newdata})")
+
+
 
             #if change_interface_field.value != interface:
             #print( f"<UPDATE2>: n.({change_interface_field.value}) - o.({interface})")
@@ -187,7 +195,8 @@ def main(page: ft.Page):
         dlg_modal2 = ft.AlertDialog(
                     
             modal=True,
-            title=ft.Text(f"<Data> {str_idx}"),
+            title=ft.Text(f"<Record Index :> {my_id}"),
+            #title=ft.Text(f"<Data> {str_idx}"),
             
             content = ft.Column(
                 #spacing=5,
@@ -319,8 +328,8 @@ def main(page: ft.Page):
                         ft.DataCell(ft.TextButton(
                                 entry[5],
                                 tooltip=entry[4],
-                                #data=ft.Text(f"{entry[0]} | {entry[1]} | {entry[2]} | {entry[3]} | {entry[4]} | {entry[5]} | {entry[6]}"),
-                                data=ft.Text(f"{entry[0]} | {entry[1]} | {entry[2]} | {entry[3]} | {entry[4]} | {entry[5]} | {entry[6]} "),
+                                data=ft.Text(f"{entry[0]} | {entry[1].strip()} | {entry[2].strip()} | {entry[3].strip()} | {entry[4].strip()} | {entry[5].strip()} | {entry[6].strip()}"),
+
                                 on_click=lambda e: handle_account_click(e, entry[3]),
                                 on_long_press=lambda e:showdata(e)
                         )),

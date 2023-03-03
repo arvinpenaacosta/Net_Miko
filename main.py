@@ -130,8 +130,7 @@ def main(page: ft.Page):
 
         def edit_entry(*e):
 
-            print(f"\nxRow ID :{my_id}")
-            print( f"<UPDATE2>: old.({str_idx})")
+
             #print( f"<UPDATE2>: new.({change_interface_field.value})")
             
 
@@ -142,6 +141,9 @@ def main(page: ft.Page):
             info1 = change_info1_field.value
             info2 = change_info2_field.value
 
+
+            print(f"\nxRow ID :{my_id}")
+            print( f"<UPDATE2>: old.({str_idx})")
             #print( f"<UPDATE2>: new.({interface})")
             newdata=f"{my_id} | {station} | {port} | {interface} | {floor} | {info1} | {info2.strip()}"
             print( f"<UPDATE2>: new.({newdata})")

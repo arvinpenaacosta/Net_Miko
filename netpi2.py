@@ -26,6 +26,7 @@ class EntryField(ft.UserControl):
 
     def build(self):
 
+        #-------------------------Top
         def close_banner(e):
             self.banner.open = False
             self.update()
@@ -45,7 +46,23 @@ class EntryField(ft.UserControl):
             self.update()
 
 
+        #-------------------------bottom    
+        self.snack_bar = ft.SnackBar(
+                    bgcolor=ft.colors.GREEN,
+                    content=ft.Text("Hello, world!"),
+                    action="Alright!",
+                )
 
+
+        def onsb_click(e):
+            print("HI")
+            #self.snack_bar = ft.SnackBar(ft.Text(f"Connected..."))
+            self.snack_bar.open = True
+            self.update()
+
+
+
+        #-------------------------checkbox    
         def change_click1(e):
             tfc1.disabled = not cb1.value;  
             tfc1.value = "" if cb1.value != True else tfc1.focus()
@@ -57,7 +74,7 @@ class EntryField(ft.UserControl):
             self.update() 
 
 
-
+        #-------------------------Data Input
         def get_input_data(e):
             data = {
                 'data1' : tf1.value,
@@ -106,6 +123,7 @@ class EntryField(ft.UserControl):
                         result[command] = output
                 print("Done Successfully...")
                 
+                onsb_click()
                 #show_nextpage()
 
                 return result
@@ -131,7 +149,7 @@ class EntryField(ft.UserControl):
         
         btn= ft.ElevatedButton(text=self.bname, on_click=get_input_data)
         btn2= ft.ElevatedButton("Show Banner", on_click=show_banner_click)
-
+        btn3= ft.ElevatedButton("Show SnackBar", on_click=onsb_click)
 
         
 
@@ -140,6 +158,7 @@ class EntryField(ft.UserControl):
         return ft.Column(
                 [
                     self.banner,
+                    self.snack_bar,
                     tf1, 
                     tf2, 
                     tf3, 
@@ -159,6 +178,7 @@ class EntryField(ft.UserControl):
                     
                     btn,
                     btn2,
+                    btn3,
                 ]
             )
 

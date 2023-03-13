@@ -26,6 +26,26 @@ class EntryField(ft.UserControl):
 
     def build(self):
 
+        def close_banner(e):
+            self.banner.open = False
+            self.update()
+
+        self.banner = ft.Banner(
+                    bgcolor=ft.colors.AMBER_100,
+                    leading=ft.Icon(ft.icons.WARNING_AMBER_ROUNDED, color=ft.colors.AMBER, size=40),
+                    actions=[
+                        ft.TextButton("Retry", on_click=close_banner),
+                        ft.TextButton("Cancel", on_click=close_banner),
+                    ],
+                )
+
+        def show_banner_click(err):
+            self.banner.content = ft.Text(f"{err}")
+            self.banner.open = True
+            self.update()
+
+
+
         def change_click1(e):
             tfc1.disabled = not cb1.value;  
             tfc1.value = "" if cb1.value != True else tfc1.focus()
@@ -95,8 +115,6 @@ class EntryField(ft.UserControl):
                 
                 show_banner_click(err)
 
-
-
             
 
         tf1 = ft.TextField(label= self.tname1)
@@ -112,7 +130,7 @@ class EntryField(ft.UserControl):
         
         
         btn= ft.ElevatedButton(text=self.bname, on_click=get_input_data)
-        #btn2= ft.ElevatedButton("Show Banner", on_click=self.show_banner_click)
+        btn2= ft.ElevatedButton("Show Banner", on_click=show_banner_click)
 
 
         
@@ -121,7 +139,7 @@ class EntryField(ft.UserControl):
 
         return ft.Column(
                 [
-
+                    self.banner,
                     tf1, 
                     tf2, 
                     tf3, 
@@ -140,7 +158,7 @@ class EntryField(ft.UserControl):
                     ),
                     
                     btn,
-                    #btn2,
+                    btn2,
                 ]
             )
 
@@ -168,33 +186,6 @@ def main(page):
     #          EntryField("tname1", "tname2", "tname3", "pass", "tnamec1", "tnamec2", "cbxname1" , "cbxname2", "Submit")
     net_miko = EntryField("tname1", "tname2", "tname3", "pass", "tnamec1", "tnamec2", "VLAN" , "Voice", "Submit")
 
-    tf1 = ft.TextField(label= self.tname1)
-    tf3 = ft.TextField(label= self.tname3)
-
-
-    def close_banner(e):
-        page.banner.open = False
-        page.update()
-
-    page.banner = ft.Banner(
-        bgcolor=ft.colors.AMBER_100,
-        leading=ft.Icon(ft.icons.WARNING_AMBER_ROUNDED, color=ft.colors.AMBER, size=40),
-        content=ft.Text( {tf1.value} -- {tf3.value} ),
-        actions=[
-            ft.TextButton("Retry", on_click=close_banner),
-            ft.TextButton("Ignore", on_click=close_banner),
-            ft.TextButton("Cancel", on_click=close_banner),
-        ],
-    )
-
-    def show_banner_click(e):
-
-
-
-        page.banner.open = True
-        page.update()
-
-
 
     page.add(
         ft.Column(
@@ -203,7 +194,7 @@ def main(page):
 
                 net_miko,
                 ft.Divider(height=5, color="RED"),
-                ft.ElevatedButton("Show Banner", on_click=show_banner_click),
+                #ft.ElevatedButton("Show Banner", on_click=show_banner_click),
                 ft.Column(
                     #scroll ="hidden",
                     scroll ="auto",
